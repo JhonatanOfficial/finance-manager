@@ -3,13 +3,14 @@
 import { LayoutDashboard, ArrowRightLeft, WalletMinimal, Settings, LogOut } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { signOut } from 'next-auth/react'
 
 export const Nav = () => {
 
   const currentSection = usePathname()
   const sizeIcon = 20;
+  const router = useRouter()
 
   const menu_nav = [
     { text: "Dashboard", href: "/dashboard", icon: <LayoutDashboard width={sizeIcon} /> },
@@ -31,7 +32,10 @@ export const Nav = () => {
         })}
       </div>
       <div>
-        <button onClick={()=> signOut()} className='flex items-center gap-3 px-5'>
+        <button onClick={()=> {
+          signOut();
+          router.refresh()
+        }} className='flex items-center gap-3 px-5'>
           <LogOut width={20} />
           <span className='text-xs'>Logout</span>
         </button>

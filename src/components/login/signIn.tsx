@@ -1,5 +1,5 @@
-
 "use client"
+
 import React, { FormEvent } from 'react'
 import { Input } from './Input'
 import Image from 'next/image'
@@ -9,13 +9,14 @@ import { useState } from 'react'
 import { Loader } from 'lucide-react'
 import { useLoginSectionProvider } from '@/context/loginSectionContext'
 import toast, { Toaster } from 'react-hot-toast'
+import { useRouter } from 'next/navigation'
 
 export const SignInForm = () => {
 
-    const { status } = useSession()
+    const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState<string | null>(null)
     const { setSection } = useLoginSectionProvider()
-
+    const router = useRouter()
     const setErrorNull = () => {
         setTimeout(() => {
             setError(null)
@@ -28,12 +29,13 @@ export const SignInForm = () => {
         const email = form.elements.namedItem("email") as HTMLInputElement
         const password = form.elements.namedItem("password") as HTMLInputElement
 
+
         if (!email.value || !password.value) {
             toast.error("Por favor, preencha todos os campos")
             setErrorNull()
             return null;
         }
-
+        setIsLoading(true)
         const response = await signIn("credentials", {
             email: email.value,
             password: password.value,
@@ -43,9 +45,15 @@ export const SignInForm = () => {
         if(!response?.ok) {
             toast.error("Email ou senha inválido")
         }
-      
+        router.refresh()
+        setIsLoading(false)
+
     }
 
+    const signInWithGoogle = async () => {
+        setIsLoading(true)
+        await signIn("google")
+    }
     return (
         <form onSubmit={signInCredentials} className='center flex-col gap-5 w-max'>
 
@@ -56,13 +64,17 @@ export const SignInForm = () => {
                 <span className='text-[red] text-sm'>{error}</span>
             </div>
             <button type="submit" className='w-full bg-black text-white p-4 rounded-lg center'>
-                {status === "loading" ?
+
+                {isLoading ?
                     <div className='animate-spin'>
                         <Loader />
                     </div>
                     :
                     <span>{"Entrar"}</span>
                 }
+
+
+
             </button>
             <div className='w-full center gap-3 px-2'>
                 <div className='w-full h-[2px] bg-black'></div>
@@ -70,7 +82,7 @@ export const SignInForm = () => {
                 <div className='w-full h-[2px] bg-black'></div>
             </div>
             {/* BUTTON GOOGLE */}
-            <button  onClick={() => signIn('google')} type='button' className='w-full p-4 border-2 border-black center gap-4 rounded-lg'>
+            <button onClick={signInWithGoogle} type='button' className='w-full p-4 border-2 border-black center gap-4 rounded-lg'>
                 <Image src={googleIcon} alt='Google Icon' width={25} height={25} />
                 <span>Continue com Google</span>
             </button>
