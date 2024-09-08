@@ -17,7 +17,7 @@ const config: Config = {
         "right-side":"5px 0 10px -2px #00000040" 
       },
       padding: {
-        "px": "1.5625rem",
+        "px": "1rem",
         "py": "1.875rem"
       }
     },

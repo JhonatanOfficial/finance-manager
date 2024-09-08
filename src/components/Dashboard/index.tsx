@@ -3,7 +3,7 @@ import { Card } from './Card'
 
 export const Dashboard = () => {
     return (
-        <div className='flex justify-center flex-col gap-5'>
+        <section className='flex justify-center flex-col gap-5 w-full'>
             <div className='flex items-center gap-6'>
                 <Card />
                 <Card />
@@ -18,6 +18,6 @@ export const Dashboard = () => {
                     </li>
                 </ul>
             </div>
-        </div>
+        </section>
     )
 }

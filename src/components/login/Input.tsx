@@ -22,7 +22,7 @@ export const Input = (props: InputProps) => {
         />
         {props.type === "password" && (
           <button type="button" onClick={()=> setShowPass(!showPass)}>
-            {showPass ? <EyeOff /> : <Eye/> }
+            {showPass ? <EyeOff width={20}/> : <Eye width={20}/> }
           </button>
         )}
       </div>
