@@ -13,8 +13,8 @@ import { NextResponse } from "next/server";
 export const authOptions: NextAuthOptions = {
   providers: [
     GoogleProvider({
-      clientId: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID as string,
-      clientSecret: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_SECRET as string,
+      clientId: process.env.GOOGLE_CLIENT_ID as string,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
       allowDangerousEmailAccountLinking: true
     }),
 
@@ -78,8 +78,8 @@ export const authOptions: NextAuthOptions = {
   adapter: FirestoreAdapter({
     credential: cert({
       projectId: process.env.NEXT_PUBLIC_PROJECT_ID,
-      clientEmail: process.env.NEXT_PUBLIC_AUTH_FIREBASE_CLIENT_EMAIL,
-      privateKey: process.env.NEXT_PUBLIC_AUTH_FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
+      clientEmail: process.env.AUTH_FIREBASE_CLIENT_EMAIL,
+      privateKey: process.env.AUTH_FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
     }),
   }) as Adapter,
 };
