@@ -10,11 +10,11 @@ import { Loader } from 'lucide-react'
 import { useLoginSectionProvider } from '@/context/loginSectionContext'
 import toast, { Toaster } from 'react-hot-toast'
 import { useRouter } from 'next/navigation'
-
+import { createUser, validateForm } from '@/utils/signUp'
+import { BtnGoogle } from './BtnGoogle'
 
 export const SignUpForm = () => {
 
-    const router = useRouter()
     const { setSection } = useLoginSectionProvider()
     const [isLoading, setIsLoading] = useState(false)
 
@@ -28,43 +28,35 @@ export const SignUpForm = () => {
         const password = form.elements.namedItem("password") as HTMLInputElement
         const confirmPassword = form.elements.namedItem("confirm-password") as HTMLInputElement
 
-        if (!email.value || !password.value) {
-            toast.error("Por favor, preencha todos os campos")
-            setIsLoading(false)
-            return null;
-        } else if (password.value !== confirmPassword.value) {
-            toast.error("As senhas não são iguais")
-            setIsLoading(false)
+        const validationError = validateForm(email.value, password.value, confirmPassword.value)
 
-            return null;
+        if (validationError) {
+            toast.error(validationError)
+            setIsLoading(false)
+            return;
         }
 
-        const response = await fetch('/api/register', {
-            method: 'POST',
-            body: JSON.stringify({
-                name: name.value,
-                email: email.value,
-                password: password.value,
-            }),
-        });
+        const response = await createUser(name.value, email.value, password.value)
 
         const res = await response.json()
 
         if (response.ok) {
             toast.success(res.message)
             setIsLoading(false)
-
-
+            setSection("SignIn")
         } else {
-        
             toast.error(res.message)
             setIsLoading(false)
-
         }
-    }
 
+    }
+    const signInWithGoogle = async () => {
+        setIsLoading(true)
+        await signIn("google")
+    }
+    
     return (
-        <form onSubmit={signInCredentials} className='center flex-col gap-5 w-max'>
+        <form onSubmit={signInCredentials} className='center flex-col gap-5 w-max relative'>
 
             <Input htmlFor='name' labelText='Name' type='text' />
             <Input htmlFor='email' labelText='Email' type='email' />
@@ -86,10 +78,9 @@ export const SignUpForm = () => {
                 <div className='w-full h-[2px] bg-black'></div>
             </div>
             {/* BUTTON GOOGLE */}
-            <button onClick={() => signIn('google')} type='button' className='w-full p-4 border-2 border-black center gap-4 rounded-lg'>
-                <Image src={googleIcon} alt='Google Icon' width={25} height={25} />
-                <span>Continue com Google</span>
-            </button>
+            {/* BUTTON GOOGLE */}
+
+            <BtnGoogle onClick={signInWithGoogle} />
 
             <div className='flex justify-end items-center gap-4 w-full text-sm'>
 
@@ -97,7 +88,7 @@ export const SignUpForm = () => {
 
             </div>
 
-            <Toaster />
+            <Toaster position='top-left' />
 
         </form>
     )

@@ -12,11 +12,11 @@ export const Nav = () => {
 
   const menu_nav = [
     { text: "Dashboard", href: "/dashboard", icon: <LayoutDashboard width={sizeIcon} /> },
-    { text: "Transaction", href: "/transaction", icon: <ArrowRightLeft width={sizeIcon} /> },
-    { text: "My wallet", href: "/mywallet", icon: <WalletMinimal width={sizeIcon} /> },
-    { text: "Settings", href: "/settings", icon: <Settings width={sizeIcon} /> },
+    { text: "Transação", href: "/transaction", icon: <ArrowRightLeft width={sizeIcon} /> },
+    { text: "Carteira", href: "/mywallet", icon: <WalletMinimal width={sizeIcon} /> },
+    { text: "Configuração", href: "/settings", icon: <Settings width={sizeIcon} /> },
   ]
-  
+
   return (
     <nav className="flex flex-col justify-between py-[1.875rem]" >
       <div className='flex flex-col gap-5'>
@@ -29,7 +29,6 @@ export const Nav = () => {
           )
         })}
       </div>
-      
     </nav>
   )
 }

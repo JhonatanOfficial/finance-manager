@@ -10,6 +10,7 @@ import { Loader } from 'lucide-react'
 import { useLoginSectionProvider } from '@/context/loginSectionContext'
 import toast, { Toaster } from 'react-hot-toast'
 import { useRouter } from 'next/navigation'
+import { BtnGoogle } from './BtnGoogle'
 
 export const SignInForm = () => {
 
@@ -82,10 +83,8 @@ export const SignInForm = () => {
                 <div className='w-full h-[2px] bg-black'></div>
             </div>
             {/* BUTTON GOOGLE */}
-            <button onClick={signInWithGoogle} type='button' className='w-full p-4 border-2 border-black center gap-4 rounded-lg'>
-                <Image src={googleIcon} alt='Google Icon' width={25} height={25} />
-                <span>Continue com Google</span>
-            </button>
+           
+           <BtnGoogle onClick={signInWithGoogle}/>
 
             <div className='flex justify-end items-center gap-4 w-full text-sm'>
 

@@ -1,4 +1,5 @@
 "use client"
+
 import { profile } from '@/assets/images'
 import Image from 'next/image'
 import React, { useState } from 'react'
@@ -18,14 +19,11 @@ export const Header = () => {
         setIsLoading(true)
         await signOut()
         setIsLoading(false)
-
     }
 
     return (
         <header className='flex items-center justify-between flex-1 py-py px-px'>
             <span className='text-white md:text-[1.5625rem] font-bold'>Dashboard</span>
-
-
             <div className='center gap-2'>
                 {status != "loading" ?
 

@@ -6,9 +6,7 @@ import { cert } from "firebase-admin/app";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { db } from "@/lib/firebase";
 import { compare } from "bcrypt";
-import { Dashboard } from "@/components/Dashboard";
-import toast from "react-hot-toast";
-import { NextResponse } from "next/server";
+import { createDocsDb } from "@/utils/createDocsDb";
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -58,14 +56,13 @@ export const authOptions: NextAuthOptions = {
       const userId = token.sub;
       const userEmail = token.email
 
-      const docRef = await db.collection("users").doc(userId! || userEmail!).get()
+      const userData = await db.collection("users").doc(userId! || userEmail!).get()
 
-      await db.collection("transations").doc(userId! || userEmail!).set({})
-      await db.collection("wallet").doc(userId! || userEmail!).set({})
-      await db.collection("settings").doc(userId! || userEmail!).set({})
+      const id = userId! || userEmail!
 
+      createDocsDb(id)
 
-      return { ...session, user: { name: docRef.data()!.name, image: docRef.data()!.image || "" } }
+      return { ...session, user: { name: userData.data()!.name, image: userData.data()!.image || "" } }
     }
   },
   secret: process.env.NEXTAUTH_SECRET,
