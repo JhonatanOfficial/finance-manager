@@ -1,7 +1,7 @@
 # Financial Manager App
 
 ## Description
-The Financial Manager App is a web application designed to help users efficiently manage their finances. Featuring a user-friendly dashboard, secure login, and registration screens, this app provides essential tools for tracking expenses, setting budgets, and visualizing financial data. Built with modern technologies, it ensures a smooth and responsive user experience.
+The Financial Manager App is a web application designed to help users efficiently manage their finances. Featuring a user-friendly dashboard, secure login, and registration screens, this app provides essential tools for tracking expenses, setting budgets, and visualizing financial data. Built with modern technologies, it ensures a smooth and responsive user experience. This application is currently under development and will be released as an open-source project.
 
 ## Technologies Used
 - [Next.js](https://nextjs.org/) - A React framework for server-side rendering and static site generation.
