@@ -8,7 +8,7 @@ import { db } from "@/lib/firebase";
 import { compare } from "bcrypt";
 import { createDocsDb } from "@/utils/createDocsDb";
 
-export const authOptions: NextAuthOptions = {
+const authOptions: NextAuthOptions = {
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID as string,
