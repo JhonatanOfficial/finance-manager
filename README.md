@@ -1,3 +1,5 @@
+![App Image](/public/app.png)
+
 # Financial Manager App
 
 https://finance-manager-mu-seven.vercel.app/
