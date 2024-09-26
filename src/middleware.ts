@@ -1,28 +1,28 @@
-// middleware.ts ou middleware.js
+// middleware.ts or middleware.js
 
 import { NextRequest, NextResponse } from 'next/server';
 import { getToken } from 'next-auth/jwt';
 
 export async function middleware(req: NextRequest) {
-  // Verifica se o usuário está logado
+  // Checks if the user is logged in
   const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
   
-  // Se o token não existir, redirecione para a página de login
+  // If the token does not exist, redirect to the login page
   if (!token && req.nextUrl.pathname.startsWith('/dashboard')) {
     const url = req.nextUrl.clone();
-    url.pathname = '/'; // A página para onde você deseja redirecionar usuários não logados
+    url.pathname = '/'; // The page to which you want to redirect unauthenticated users
     return NextResponse.redirect(url);
   }
   else if(token && req.nextUrl.pathname === "/") {
     const url = req.nextUrl.clone();
-    url.pathname = '/dashboard'; // A página para onde você deseja redirecionar usuários não logados
+    url.pathname = '/dashboard'; // The page to which you want to redirect logged-in users
     return NextResponse.redirect(url);
   }
 
-  // Permite o acesso se o usuário estiver logado ou se não estiver na página protegida
+  // Allows access if the user is logged in or if they are not on a protected page
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ['/dashboard/:path*', '/'], // Aplica o middleware a todas as rotas sob /dashboard
+  matcher: ['/dashboard/:path*', '/'], // Applies the middleware to all routes under /dashboard
 };
